@@ -5,6 +5,12 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryProductController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckOutController;
+use App\Http\Controllers\HistoryController;
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -150,4 +156,57 @@ Route::post('/save-product', [
     ProductController::class, 'save_product'
 ])->name('save-product');
 
+// luongth check out
+// add tocard
+Route::get('/product/add-to-card/{id}',
+[
+    CartController::class,'addToCard'
+])->name('addToCard');
+//cart detail 
+Route::get('/cartDetail',[
+    CartController::class,'showCart'
+])->name('cartDetail');
+//update cart 
+Route::get('/cart-update',[
+    CartController::class,'upDateCart'
+])->name('updateCart');
+Route::get('/cart-delete_by_id',[
+    CartController::class,'deleteCartById'
+])->name('deleteCart');
+// route check out
+Route::get('/check_out',[
+        
+    CartController::class,'getTotal'
+    ])->name('check_out');
+    Route::post('/vn_payment',[
+        
+        CheckOutController::class,'vn_payment'
+        ])->name('vn_payment');
+        Route::post('/vn_momo',[
+        
+            CheckOutController::class,'vn_momo'
+            ])->name('vn_momo');
+            Route::post('/vn_onepay',[
+        
+                CheckOutController::class,'vn_onepay'
+                ])->name('vn_onepay');
+                //route thank History
+   Route::get('/thank',[
+        
+    HistoryController::class,'index'
+    ])->name('thank');
+   
+    Route::get('/thank_vn_momo',[
+        
+        HistoryController::class,'insertPaymentVnMomo'
+        ])->name('isert_momo');
+        Route::get('/thank_vn_pay',[
+        
+            HistoryController::class,'insertPaymentVNpay'
+            ])->name('isert_vn_pay');
 
+            Route::get('/data_user',[
+        
+             HistoryController::class,'getDataCheckOut'
+                ])->name('input_data');  
+            

@@ -23,6 +23,8 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 </head><!--/head-->
 
 <body>
@@ -90,7 +92,7 @@
                                 <li><a href="#"><i class="fa fa-user"></i> Account</a></li>
                                 <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
                                 <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                                <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                                <li><a href="{{ route('cartDetail') }}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                 <li><a href="login.html"><i class="fa fa-lock"></i> Login</a></li>
                             </ul>
                         </div>
@@ -219,14 +221,14 @@
 
 
                         <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-                            @foreach($category as $key => $cate)
+                            {{-- @foreach($category as $key => $cate)
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <a href="{{URL::to('/danh-muc-san-pham/'.$cate->category_id)}}">{{$cate->category_name}}</a></h4>
                                 </div>
                             </div>
-                            @endforeach
+                            @endforeach --}}
                         </div><!--/category-products-->
 
                         <!--brands_products-->
@@ -438,6 +440,307 @@
     <script src="{{ asset('frontend/js/price-range.js') }}"></script>
     <script src="{{ asset('frontend/js/jquery.prettyPhoto.js') }}"></script>
     <script src="{{ asset('frontend/js/main.js') }}"></script>
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+  <!-- CSS -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+  <!-- Default theme -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+  <!-- Semantic UI theme -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+  <!-- Bootstrap theme -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
+  
+  <!-- 
+      RTL version
+  -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.rtl.min.css"/>
+  <!-- Default theme -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.rtl.min.css"/>
+  <!-- Semantic UI theme -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.rtl.min.css"/>
+  <!-- Bootstrap theme -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.rtl.min.css"/>
+  <Script>
+    function calculateTotalQuantity(data) {
+        let totalQuantity = 0;
+    
+        if (data && Array.isArray(data.items)) {
+            // Trường hợp 1: Nếu data chứa một trường là mảng (ví dụ: items)
+            data.items.forEach(item => {
+                totalQuantity +=  parseInt(item.quantity);
+            });
+        } else if (typeof data === 'object') {
+            // Trường hợp 2: Nếu cần duyệt qua các giá trị của đối tượng
+            Object.values(data).forEach(item => {
+                totalQuantity +=  parseInt(item.quantity); // Giả sử mỗi item là một đối tượng có trường 'quantity'
+            });
+        } else {
+            console.log("Dữ liệu không hợp lệ");
+            return;
+        }
+    
+        // Cập nhật nội dung HTML
+        $('#total-quantity').html(totalQuantity);
+    }
+    
+    
+    
+       $(document).ready(function () {
+        
+    
+         function addToCard(event){
+        event.preventDefault();
+        let urlProduct = $(this).data('url');
+    
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: urlProduct,
+        success: function (response) {
+    if(response.code ===200){
+        // alertify.notify( message, 'success', [wait, callback]);
+      alertify.success('Success Addcart');
+      // parse json 
+      calculateTotalQuantity(response.data);
+      
+    
+    
+    }        
+        }, 
+        error:function(){
+    
+        }
+    
+        
+    });
+    
+    }
+           
+    $('.add_to_card').on('click',addToCard);
+    
+    
+    // Function to update the cart
+    function upDateCart(id, quantity) {
+        let urlUpdateCart = $('.cart_wapper .update_cart_url').data('url');
+    
+        // Your AJAX request
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: urlUpdateCart,
+            data: { id: id, quantity: quantity },
+            success: function(response) {
+                if (response.code === 200) {
+                    $('.cart_wapper').html(response.cart_Component);
+                    console.log(response.data);
+      calculateTotalQuantity(response.data);
+    
+                }
+            },
+            error: function() {
+                // Handle errors here
+            }
+        });
+    }
+    function deleteCartById(id){
+        let urlUpdateCart = $('.cart_wapper .delete_cart_url').data('url');
+    
+    // Your AJAX request
+    $.ajax({
+        type: 'GET',
+        dataType: 'json',
+        url: urlUpdateCart,
+        data: { id: id},
+        success: function(response) {
+            console.log(response);
+            if (response.code === 200) {
+                 $('.cart_wapper').html(response.cart_Component);
+      calculateTotalQuantity(response.data);
+    
+            }
+        },
+        error: function() {
+            // Handle errors here
+        }
+    });
+    }
+    //update Cart 
+    $('.cart_wapper').on('click', '.cart-edit', function(event) {
+        event.preventDefault();
+        
+        // Retrieve id and quantity
+        let id = $(this).data('id');
+        let quantity = $('.cart_wapper #' + id).val();
+    
+        // Call the upDateCart function with id and quantity
+        upDateCart(id, quantity);
+    });
+    //delet cart
+    $('.cart_wapper').on('click', '.cart-delete', function(event) {
+        event.preventDefault();
+        
+        // Retrieve id and quantity
+        let id = $(this).data('id');
+        
+    
+        // Call the upDateCart function with id and quantity
+        deleteCartById(id);
+    });
+    function getValueInput() {
+        var values = {
+            fullname: $("#inputFullname").val(),
+            phone: $("#inputPhone").val(),
+            email: $("#inputEmail").val(),
+            address: $("#inputAddress").val(),
+            city: $("#citySelect").val(),
+            house: $("#inputHause").val(),
+            postalCode: $("#postalCodeInput").val(),
+            zip: $("#zipInput").val(),
+            checkbox1: $("#flexCheckDefault").prop("checked"),
+            checkbox2: $("#flexCheckDefault1").prop("checked")
+        };
+    
+        return values;
+    }
+    function validateForm(values) {
+        // Validate Fullname
+        if ($.trim(values.fullname) === '') {
+            alert("Please fill in the Fullname field");
+            return false;
+        }
+    
+        // Validate Phone
+        if ($.trim(values.phone) === '') {
+            alert("Please fill in the Phone field");
+            return false;
+        }
+    
+        // Validate Email
+        if ($.trim(values.email) === '') {
+            alert("Please fill in the Email field");
+            return false;
+        }
+    
+        // Validate Address
+        if ($.trim(values.address) === '') {
+            alert("Please fill in the Address field");
+            return false;
+        }
+    
+        // Validate City
+        if ($.trim(values.city) === '') {
+            alert("Please select a City");
+            return false;
+        }
+    
+        // Validate House
+        if ($.trim(values.house) === '') {
+            alert("Please fill in the House field");
+            return false;
+        }
+    
+        // Validate Postal Code
+        if ($.trim(values.postalCode) === '') {
+            alert("Please fill in the Postal Code field");
+            return false;
+        }
+    
+        // Validate Zip
+        if ($.trim(values.zip) === '') {
+            alert("Please fill in the Zip field");
+            return false;
+        }
+    
+        // Validate Checkbox 1
+        if (!values.checkbox1) {
+            alert("Please check Checkbox 1");
+            return false;
+        }
+    
+        // Validate Checkbox 2
+        if (!values.checkbox2) {
+            alert("Please check Checkbox 2");
+            return false;
+        }
+    
+        // You can add more validation rules as needed
+    
+        return true;
+    }function setModalFields(nameProduct, quantity, subtotal, nameUser,email,phone, address,house,postalCode,zip) {
+        $('#nameProduct').val(nameProduct);
+        $('#quantity').val(quantity);
+       
+    
+        $('#subtotal').val(subtotal);
+        $('#nameUser').val(nameUser);
+        $('#phoneUser').val(phone);
+        $('#emailUser').val(email);
+        $('#address').val(address + ', ' + house + ', ' + postalCode + ', ' + zip);
+    
+      }
+      function openModal(data) {
+        // Set modal fields with the provided data
+        setModalFields(data.product, data.quantity, data.subtotal, data.fullname,data.email,data.phone, data.address,data.house,data.postalCode,data.zip);
+    
+        // Show the modal
+        $('#myModal').modal('show');
+      }
+      $('#showModalButton').on('click', function () {
+        let data = getValueInput();
+       if(validateForm(data)){
+       let url = 'http://127.0.0.1:8000/data_user'
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: url,
+            data: data,
+            success: function(response) {
+                if (response.code === 200) {
+                    console.log(response);
+                  
+                     openModal(data);
+                   
+                }
+            },
+            error: function() {
+                // Handle errors here
+            }
+        });
+    
+    
+       }
+        });
+    
+      //get value checkked
+      $('#submitButton').click(function() {
+          var selectedPaymentMethod = $('input[name="paymentMethod"]:checked').val();
+          if (selectedPaymentMethod !== undefined) {
+    
+           switch (selectedPaymentMethod) {
+    
+            case '1':
+            $('#vn_payment').click();
+                
+                break;
+                case '2':
+                $('#vn_momo').click();
+                
+                break;
+           
+            default:
+                break;
+           }
+          } else {
+            console.log('Please select a payment method');
+          }
+        });
+     
+    
+    
+    });
+    
+    
+         </Script>
 </body>
 
 <script type="text/javascript">

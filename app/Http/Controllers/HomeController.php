@@ -20,7 +20,9 @@ class HomeController extends Controller
         // ->join('category_product', 'category_product.category_id', '=', 'product.category_id')
         // ->orderBy('product.product_id', 'desc')->get();
 //123
-        $all_product = DB::table('product')->where('product_status','0')->orderby('product_id', 'desc')->limit(4)->get();
-        return view('pages.home')->with('category',$cate_product)->with('all_product',$all_product);
+        $all_product = DB::table('product')->get();
+        return view('pages.home')->with('all_product',$all_product);;
+    
+     
     }
 }
