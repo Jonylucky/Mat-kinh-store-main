@@ -27,11 +27,11 @@ class HistoryController extends Controller
             $carts = session()->get('cart');
           
             //xét giá trị cart
-            $totalAmount = 0;
+           
             $totalQuantity = 0;
             $productNames = [];
             foreach ($carts as $cart) {
-                $totalAmount += $cart['quantity'] * $cart['price']; //
+               
                 $productNames[] = $cart['name'];
                 $totalQuantity += $cart['quantity'];
             }
@@ -44,7 +44,7 @@ class HistoryController extends Controller
                 'product_name' => implode(", ", $productNames), // Cập nhật từ thông tin sản phẩm
                 'quantity' =>$totalQuantity, // Cập nhật từ thông tin sản phẩm
              
-                'total_amount' => $totalAmount, // Tính toán từ giỏ hàng
+                'total_amount' =>$data['amount'], // Tính toán từ giỏ hàng
                 'shipping_address' => json_encode([
                     'house' => $address['house'],
                     'city' => $address['city'],

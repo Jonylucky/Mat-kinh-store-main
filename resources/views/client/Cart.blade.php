@@ -3,9 +3,9 @@
 <div class="cart_wapper">
     <section class="h-100 h-custom" style="background-color: #d2c9ff;">
         <div class="container py-5 h-100  update_cart_url" data-url="{{ route('updateCart') }}">
-          <div class="row d-flex justify-content-center align-items-center h-100 delete_cart_url" data-url="{{ route('deleteCart') }}">
+          <div class="row  delete_cart_url" data-url="{{ route('deleteCart') }}">
             <div class="col-12">
-              <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+              <div class="card card-registration card-registration-2 " style="border-radius: 15px;">
                 <div class="card-body p-0">
                   <div class="row g-0">
                     <div class="col-lg-8">
@@ -30,7 +30,7 @@
                               class="img-fluid rounded-3" alt="Cotton T-shirt"style="height: 150px; width: 150px;">
                           </div>
                           <div class="col-md-3 col-lg-3 col-xl-3">
-                            <h6 class="text-muted">{{ $cart['name'] }}</h6>
+                            <h3 class="text-muted">{{ $cart['name'] }}</h3>
                           </div>
                           <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                             <button 
@@ -56,7 +56,7 @@
                             </button>
                           </div>
                           <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                            <h6 class="mb-0">{{ $cart['price']  * $cart['quantity'] }}</h6>
+                            <h3 class="mb-0">{{ $cart['price']  * $cart['quantity'] }}</h3>
                           </div>
                          
                           <div class="col-md-1 col-lg-1 col-xl-1 text-end">

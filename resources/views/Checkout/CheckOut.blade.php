@@ -1,16 +1,16 @@
 
 @extends('layout')
 @section('content')
-<section class="bg-light py-5">
-    <div class="container">
+<section class="bg-light" style=" font-size: 20px;">
+    <div class="container ">
 
 
-      <div class="row">
-        <div class="col-xl-8 col-lg-8 mb-4">
+      <div class="row ">
+        <div class="col-xl-8 col-lg-8 mb-6">
           <div class="card mb-4 border shadow-0">
             <div class="p-4 d-flex justify-content-between">
               <div class="">
-                <h5>Have an account?</h5>
+                <h5 style=" font-size: 20px;">Have an account?</h5>
                 <p class="mb-0 text-wrap ">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
               </div>
               <div class="d-flex align-items-center justify-content-center flex-column flex-md-row">
@@ -21,9 +21,9 @@
           </div>
   
           <!-- Checkout -->
-          <form id="checkoutForm" action="{{ route('input_data') }}" method="GET">
+          <form id="checkoutForm" action="{{ route('input_data') }}" method="GET" class="">
           
-            <div class="card shadow-0 border">
+            <div class="card shadow-0 border card-registration card-registration-2">
               <div class="p-4">
                 <h5 class="card-title mb-3">Guest checkout</h5>
                 <div class="row">
@@ -150,7 +150,7 @@
     
                 <div class="float-end">
                   <button type="button" class="btn btn-light border" id="cancelBtn">Cancel</button>
-                  <button type="button" id="showModalButton" class="btn btn-primary contineu" data-toggle="modal" data-target="#myModal" >
+                  <button type="button" id="showModalButton" class="btn btn-primary contineu" data-toggle="modal"  >
                    Contineu
                   </button>
                 </div>
@@ -172,7 +172,7 @@
        
         <div class="col-xl-4 col-lg-4 d-flex justify-content-center justify-content-lg-end">
           <div class="ms-lg-4 mt-4 mt-lg-0" style="max-width: 320px;">
-            <h6 class="mb-3">Summary</h6>
+            <h4 class="mb-3" style="font-size: 20px; ">Summary</h4>
             <div class="d-flex justify-content-between">
               <p class="mb-2">nameProduct:</p>
               <p class="mb-2">@foreach ($allProductNames as $productName)
@@ -210,7 +210,7 @@
             </div>
         </section>
         {{-- modal buill --}}
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal " id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -223,7 +223,7 @@
                 <!-- Form fields -->
                 <div class="col-xl-4 col-lg-4 d-flex justify-content-center justify-content-lg-end">
                   <div class="ms-lg-4 mt-4 mt-lg-0" style="max-width: 320px;">
-                    <h6 class="mb-3">Summary</h6>
+                    <h4 class="mb-3">Summary</h4>
                     <p class="mb-2">nameProduct:</p>
               <p class="mb-2">@foreach ($allProductNames as $productName)
                 {{ $productName }},

@@ -28,7 +28,7 @@
                           class="img-fluid rounded-3" alt="Cotton T-shirt"style="height: 150px; width: 150px;"/>
                       </div>
                       <div class="col-md-3 col-lg-3 col-xl-3">
-                        <h6 class="text-muted">{{ $cart['name'] }}</h6>
+                        <h3 class="text-muted">{{ $cart['name'] }}</h3>
                       </div>
                       <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                         <button 
@@ -54,7 +54,7 @@
                         </button>
                       </div>
                       <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                        <h6 class="mb-0">{{ $cart['price']  * $cart['quantity'] }}</h6>
+                        <h3 class="mb-0">{{ $cart['price']  * $cart['quantity'] }}</h3>
                       </div>
                      
                       <div class="col-md-1 col-lg-1 col-xl-1 text-end">

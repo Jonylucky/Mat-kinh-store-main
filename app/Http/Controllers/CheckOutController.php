@@ -112,7 +112,7 @@ class CheckOutController extends Controller
 }
     public function vn_momo(Request $request){
          $data = $request->all();
-      $total =  ($data['vn_momo'] *100);
+      $total =  ($data['vn_momo']);
         $endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
     
 
@@ -123,7 +123,7 @@ $accessKey = 'klm05TvNBzhg7h7j';
 $serectkey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
 
 $orderInfo = "Thanh toán qua MoMo";
-$amount = (string)(($total)*10);
+$amount = (string)(($total));
 $orderid = time() . "";
 $requestId = time(). "";
 $returnUrl = "http://127.0.0.1:8000/thank_vn_momo";
