@@ -29,6 +29,7 @@
                               src="{{ asset('public/uploads/product/'. $cart['img']) }}"
                               class="img-fluid rounded-3" alt="Cotton T-shirt"style="height: 150px; width: 150px;">
                           </div>
+                          
                           <div class="col-md-3 col-lg-3 col-xl-3">
                             <h3 class="text-muted">{{ $cart['name'] }}</h3>
                           </div>
